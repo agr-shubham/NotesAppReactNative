@@ -1,38 +1,72 @@
-import React, { Component } from 'react';
-import { Text, View, FlatList, Button, TextInput } from 'react-native';
+import React, {Component} from 'react';
+import {
+  Text,
+  View,
+  FlatList,
+  Button,
+  TextInput,
+  StyleSheet,
+} from 'react-native';
 
 class NewNote extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
-      title: "",
-      content: ""
-    }
-      
+    this.state = {
+      title: '',
+      content: '',
+    };
   }
 
-  setTitle = (newText) => {
+  setTitle = newText => {
     console.log(newText);
-    this.setState({ title: newText });
+    this.setState({title: newText});
   };
 
-  setNote = (newText) => {
+  setNote = newText => {
     console.log(newText);
-    this.setState({ content: newText });
+    this.setState({content: newText});
   };
 
   render() {
     return (
-      <View>
-       <TextInput
-        placeholder='Title'
-        onChangeText={newText => this.setTitle(newText)}/>
-      <TextInput
-        placeholder='Start typing here'
-        onChangeText={newText => this.setNote(newText)}/>
+      <View style={styles.newNoteContainer}>
+        <View style={styles.noteTitleContainer}>
+          <TextInput
+          style={styles.titleText}
+            placeholder="Title"
+            onChangeText={newText => this.setTitle(newText)}
+          />
+        </View>
+        <View style={styles.noteContentContainer}>
+          <TextInput
+          style={styles.contentText}
+          placeholder="Start typing here"
+          multiline={true}
+          onChangeText={newText => this.setNote(newText)}
+          />
+        </View>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+    newNoteContainer:{
+        flexDirection:'column'
+    },
+    noteContentContainer: {
+        justifyContent: 'center',
+      },
+    noteTitleContainer: {
+    height: 60
+  },
+  titleText:{
+    fontSize:25,
+    fontWeight:'bold'
+  },
+  contentText:{
+    fontSize:19
+  }
+});
 
 export default NewNote;

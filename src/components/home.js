@@ -9,7 +9,7 @@ class Home extends Component {
     super(props);
     this.state = {
       notes: ["hi","hello"],
-      page:"noteList"    
+      page:"notesList"    
     }
       
   }
