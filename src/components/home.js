@@ -23,11 +23,9 @@ class Home extends Component {
       title: title,
       content: content,
     };
-    console.log(this.state.notes);
   };
 
   setPage = newText => {
-    console.log(newText);
     if (newText === newNotePage) {
       newid = ++this.autoid;
       this.state.notes.push({id: newid, title: '', content: ''});
@@ -37,7 +35,6 @@ class Home extends Component {
     }
   };
   setPageEditNote = index => {
-    console.log('D ' + index);
     this.editNoteId = index;
     this.setState({page: newNotePage});
   };

@@ -7,7 +7,6 @@ import {
   TextInput,
   StyleSheet,
   Pressable,
-  TouchableOpacity,
 } from 'react-native';
 import {notesListPage, newNotePage} from '../util/Constants';
 
@@ -22,25 +21,25 @@ class Header extends Component {
       <View style={styles.headerContainer}>
         {this.props.page === newNotePage && (
           <View style={styles.buttonContainer}>
-            <TouchableOpacity
+            <Pressable
               style={styles.button}
               onPress={() => {
                 this.props.setPage(notesListPage);
               }}
               title="Back">
               <Text style={styles.buttonText}>Back</Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
         )}
         {this.props.page === notesListPage && (
           <View style={styles.buttonContainer}>
-            <TouchableOpacity
+            <Pressable
               style={styles.button}
               onPress={() => {
                 alert('Nav Button');
               }}>
               <Text style={styles.buttonText}>Nav</Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
         )}
         <View style={styles.titleContainer}>
@@ -48,19 +47,19 @@ class Header extends Component {
         </View>
         {this.props.page === notesListPage && (
           <View style={styles.buttonContainer}>
-            <TouchableOpacity
+            <Pressable
               style={styles.button}
               onPress={() => {
                 this.props.setPage(newNotePage);
               }}
               title="New">
               <Text style={styles.buttonText}>New</Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
         )}
         {this.props.page === newNotePage && (
           <View style={styles.buttonContainer}>
-            <TouchableOpacity
+            <Pressable
               style={styles.button}
               onPress={() => {
                 this.props.setPage(notesListPage);
@@ -68,7 +67,7 @@ class Header extends Component {
               }}
               title="Delete">
               <Text style={styles.buttonText}>Delete</Text>
-            </TouchableOpacity>
+            </Pressable>
           </View>
         )}
       </View>
