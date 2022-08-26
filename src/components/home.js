@@ -3,24 +3,14 @@ import {Text, View, FlatList, Button} from 'react-native';
 import Header from './header';
 import NewNote from './newNote';
 import NotesList from './notesList';
+import {notesListPage, newNotePage} from '../util/Constants';
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      notes: [
-        {
-          id: 1,
-          title: 'Title',
-          content: 'Content',
-        },
-        {
-          id: 2,
-          title: 'Title2',
-          content: 'Content2',
-        },
-      ],
-      page: 'notesList',
+      notes: [],
+      page: notesListPage,
     };
   }
   editNoteId = 0;
@@ -38,33 +28,33 @@ class Home extends Component {
 
   setPage = newText => {
     console.log(newText);
-    if (newText === 'NewNote') {
+    if (newText === newNotePage) {
       newid = ++this.autoid;
       this.state.notes.push({id: newid, title: '', content: ''});
       this.setPageEditNote(newid);
     } else {
-      this.setState({page: 'notesList'});
+      this.setState({page: notesListPage});
     }
   };
   setPageEditNote = index => {
     console.log('D ' + index);
     this.editNoteId = index;
-    this.setState({page: 'NewNote'});
+    this.setState({page: newNotePage});
   };
+
   render() {
     return (
       <View>
         <Header setPage={this.setPage} page={this.state.page} />
-        {this.state.page === 'notesList' && (
+        {this.state.page === notesListPage && (
           <>
             <NotesList
               notes={this.state.notes}
-              setPage={this.setPage}
               setPageEditNote={this.setPageEditNote}
             />
           </>
         )}
-        {this.state.page === 'NewNote' && (
+        {this.state.page === newNotePage && (
           <>
             <NewNote
               notes={this.state.notes}

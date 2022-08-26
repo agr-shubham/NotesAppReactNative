@@ -11,10 +11,6 @@ import {
 class NewNote extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props.id);
-    console.log(this.props.notes);
-
-    console.log(this.props.notes.find(item => item.id == this.props.id).title);
     this.state = {
       id: this.props.id,
       title: this.props.notes.find(item => item.id == this.props.id).title,
@@ -29,13 +25,11 @@ class NewNote extends Component {
   }
 
   setTitle = newText => {
-    console.log(newText);
     this.setState({title: newText});
     this.save(this.state.id, newText, this.state.content);
   };
 
   setNote = newText => {
-    console.log(newText);
     this.setState({content: newText});
     this.save(this.state.id, this.state.title, newText);
   };

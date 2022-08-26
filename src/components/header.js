@@ -9,6 +9,7 @@ import {
   Pressable,
   TouchableOpacity,
 } from 'react-native';
+import {notesListPage, newNotePage} from '../util/Constants';
 
 class Header extends Component {
   constructor(props) {
@@ -19,99 +20,95 @@ class Header extends Component {
   render() {
     return (
       <View style={styles.headerContainer}>
-        {this.props.page === 'NewNote' && (
+        {this.props.page === newNotePage && (
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
-                this.props.setPage('notesList');
+                this.props.setPage(notesListPage);
               }}
-              title="Back"
-            >
-                <Text style={styles.buttonText}>Back</Text>
+              title="Back">
+              <Text style={styles.buttonText}>Back</Text>
             </TouchableOpacity>
           </View>
         )}
-        {this.props.page === 'notesList' && (
+        {this.props.page === notesListPage && (
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
                 alert('Nav Button');
-              }}
-            >
-                <Text style={styles.buttonText}>Nav</Text>
+              }}>
+              <Text style={styles.buttonText}>Nav</Text>
             </TouchableOpacity>
           </View>
         )}
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Notes</Text>
         </View>
-        {this.props.page === 'notesList' && (
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
+        {this.props.page === notesListPage && (
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
               style={styles.button}
-            onPress={() => {
-              this.props.setPage('NewNote');
-            }}
-            title="New"
-          >
-            <Text style={styles.buttonText}>New</Text>
-          </TouchableOpacity>
-        </View>
+              onPress={() => {
+                this.props.setPage(newNotePage);
+              }}
+              title="New">
+              <Text style={styles.buttonText}>New</Text>
+            </TouchableOpacity>
+          </View>
         )}
-        {this.props.page === 'NewNote' && (
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
+        {this.props.page === newNotePage && (
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
               style={styles.button}
-            onPress={() => {
-              this.props.setPage('notesList');
-              alert('Deleted');
-            }}
-            title="Delete"
-          >
-            <Text style={styles.buttonText}>Delete</Text>
-          </TouchableOpacity>
-        </View>
+              onPress={() => {
+                this.props.setPage(notesListPage);
+                alert('Deleted');
+              }}
+              title="Delete">
+              <Text style={styles.buttonText}>Delete</Text>
+            </TouchableOpacity>
+          </View>
         )}
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
-    button:{
-        height: "100%",
-        backgroundColor: 'blue',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    buttonText:{
-        color:'white',
-        fontSize:20
-    },
+  button: {
+    height: '100%',
+    backgroundColor: 'blue',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 20,
+  },
   buttonContainer: {
     width: 80,
     height: '100%',
     borderWidth: 2,
     borderColor: 'black',
     color: 'black',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   headerContainer: {
     height: 70,
     flexDirection: 'row',
     borderWidth: 2,
-    borderColor: 'black'
+    borderColor: 'black',
   },
   titleContainer: {
     justifyContent: 'center',
-    backgroundColor:'blue',
-    flex:1
+    backgroundColor: 'blue',
+    flex: 1,
   },
-  title:{
-    color:'white',
-    paddingStart:10,
-    fontSize:30
+  title: {
+    color: 'white',
+    paddingStart: 10,
+    fontSize: 30,
   },
 });
 export default Header;
