@@ -8,36 +8,30 @@ import {
   Pressable,
 } from 'react-native';
 
-class NotesList extends Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    if (this.props.notes.length == 0) {
-      return <Text>No notes</Text>;
-    } else {
-      return (
-        <View>
-          <FlatList
-            data={this.props.notes}
-            keyExtractor={item => item.id}
-            renderItem={({item}) => (
-              <View style={styles.noteCard}>
-                <Pressable
-                  onPress={this.props.setPageEditNote.bind(this, item.id)}>
-                  <Text style={styles.title} numberOfLines={1}>
-                    {item.title === '' ? 'Untitled' : item.title}
-                  </Text>
-                  <Text style={styles.content} numberOfLines={1}>
-                    {item.content === '' ? 'Blank' : item.content}
-                  </Text>
-                </Pressable>
-              </View>
-            )}
-          />
-        </View>
-      );
-    }
+function NotesList(props) {
+  if (props.notes.length == 0) {
+    return <Text>No notes</Text>;
+  } else {
+    return (
+      <View>
+        <FlatList
+          data={props.notes}
+          keyExtractor={item => item.id}
+          renderItem={({item}) => (
+            <View style={styles.noteCard}>
+              <Pressable onPress={props.setPageEditNote.bind(this, item.id)}>
+                <Text style={styles.title} numberOfLines={1}>
+                  {item.title === '' ? 'Untitled' : item.title}
+                </Text>
+                <Text style={styles.content} numberOfLines={1}>
+                  {item.content === '' ? 'Blank' : item.content}
+                </Text>
+              </Pressable>
+            </View>
+          )}
+        />
+      </View>
+    );
   }
 }
 

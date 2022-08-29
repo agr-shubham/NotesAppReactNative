@@ -8,71 +8,64 @@ import {
   StyleSheet,
   Pressable,
 } from 'react-native';
-import {notesListPage, newNotePage} from '../util/Constants';
+import {notesListPage, newNotePage} from '../util/constants';
 
-class Header extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    return (
-      <View style={styles.headerContainer}>
-        {this.props.page === newNotePage && (
-          <View style={styles.buttonContainer}>
-            <Pressable
-              style={styles.button}
-              onPress={() => {
-                this.props.setPage(notesListPage);
-              }}
-              title="Back">
-              <Text style={styles.buttonText}>Back</Text>
-            </Pressable>
-          </View>
-        )}
-        {this.props.page === notesListPage && (
-          <View style={styles.buttonContainer}>
-            <Pressable
-              style={styles.button}
-              onPress={() => {
-                alert('Nav Button');
-              }}>
-              <Text style={styles.buttonText}>Nav</Text>
-            </Pressable>
-          </View>
-        )}
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>Notes</Text>
+function Header(props) {
+  return (
+    <View style={styles.headerContainer}>
+      {props.page === newNotePage && (
+        <View style={styles.buttonContainer}>
+          <Pressable
+            style={styles.button}
+            onPress={() => {
+              props.setPage(notesListPage);
+            }}
+            title="Back">
+            <Text style={styles.buttonText}>Back</Text>
+          </Pressable>
         </View>
-        {this.props.page === notesListPage && (
-          <View style={styles.buttonContainer}>
-            <Pressable
-              style={styles.button}
-              onPress={() => {
-                this.props.setPage(newNotePage);
-              }}
-              title="New">
-              <Text style={styles.buttonText}>New</Text>
-            </Pressable>
-          </View>
-        )}
-        {this.props.page === newNotePage && (
-          <View style={styles.buttonContainer}>
-            <Pressable
-              style={styles.button}
-              onPress={() => {
-                this.props.setPage(notesListPage);
-                alert('Deleted');
-              }}
-              title="Delete">
-              <Text style={styles.buttonText}>Delete</Text>
-            </Pressable>
-          </View>
-        )}
+      )}
+      {props.page === notesListPage && (
+        <View style={styles.buttonContainer}>
+          <Pressable
+            style={styles.button}
+            onPress={() => {
+              alert('Nav Button');
+            }}>
+            <Text style={styles.buttonText}>Nav</Text>
+          </Pressable>
+        </View>
+      )}
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>Notes</Text>
       </View>
-    );
-  }
+      {props.page === notesListPage && (
+        <View style={styles.buttonContainer}>
+          <Pressable
+            style={styles.button}
+            onPress={() => {
+              props.setPage(newNotePage);
+            }}
+            title="New">
+            <Text style={styles.buttonText}>New</Text>
+          </Pressable>
+        </View>
+      )}
+      {props.page === newNotePage && (
+        <View style={styles.buttonContainer}>
+          <Pressable
+            style={styles.button}
+            onPress={() => {
+              props.setPage(notesListPage);
+              alert('Deleted');
+            }}
+            title="Delete">
+            <Text style={styles.buttonText}>Delete</Text>
+          </Pressable>
+        </View>
+      )}
+    </View>
+  );
 }
 const styles = StyleSheet.create({
   button: {

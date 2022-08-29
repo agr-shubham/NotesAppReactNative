@@ -1,68 +1,61 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {Text, View, FlatList, Button} from 'react-native';
 import Header from './header';
 import NewNote from './newNote';
 import NotesList from './notesList';
-import {notesListPage, newNotePage} from '../util/Constants';
+import {notesListPage, newNotePage} from '../util/constants';
 
-class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      notes: [],
-      page: notesListPage,
-    };
-  }
-  editNoteId = 0;
-  autoid = 3;
+function Home(props) {
+  const [notes, setNotes] = useState([]);
+  const [page, setPageState] = useState(notesListPage);
+  const [editNoteId, setEditNoteId] = useState(0);
+  const [autoid, setAutoid] = useState(3);
 
   updateNote = (id, title, content) => {
-    index = this.state.notes.findIndex(item => item.id == id);
-    this.state.notes[index] = {
-      id: id,
-      title: title,
-      content: content,
-    };
+    index = notes.findIndex(item => item.id == id);
+    setNotes(notes => {
+      return [
+        ...notes.slice(0, index),
+        {
+          id: id,
+          title: title,
+          content: content,
+        },
+        ...notes.slice(index + 1),
+      ];
+    });
   };
 
   setPage = newText => {
     if (newText === newNotePage) {
-      newid = ++this.autoid;
-      this.state.notes.push({id: newid, title: '', content: ''});
-      this.setPageEditNote(newid);
+      newid = autoid;
+      setAutoid(autoid + 1);
+      setNotes(notes => [...notes, {id: newid, title: '', content: ''}]);
+      setPageEditNote(newid);
     } else {
-      this.setState({page: notesListPage});
+      setPageState(notesListPage);
     }
   };
   setPageEditNote = index => {
-    this.editNoteId = index;
-    this.setState({page: newNotePage});
+    setEditNoteId(index);
+    setPageState(newNotePage);
   };
 
-  render() {
-    return (
-      <View>
-        <Header setPage={this.setPage} page={this.state.page} />
-        {this.state.page === notesListPage && (
-          <>
-            <NotesList
-              notes={this.state.notes}
-              setPageEditNote={this.setPageEditNote}
-            />
-          </>
-        )}
-        {this.state.page === newNotePage && (
-          <>
-            <NewNote
-              notes={this.state.notes}
-              id={this.editNoteId}
-              updateNote={this.updateNote}
-            />
-          </>
-        )}
-      </View>
-    );
-  }
+  return (
+    <View>
+      <Header setPage={setPage} page={page} />
+      {page === notesListPage && (
+        <>
+          <NotesList notes={notes} setPageEditNote={setPageEditNote} />
+        </>
+      )}
+      {page === newNotePage && (
+        <>
+          <NewNote notes={notes} id={editNoteId} updateNote={updateNote} />
+        </>
+      )}
+    </View>
+  );
 }
 
 export default Home;
