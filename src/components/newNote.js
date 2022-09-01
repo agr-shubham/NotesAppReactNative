@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+
+import {useSelector, useDispatch} from 'react-redux';
 import {
   Text,
   View,
@@ -7,8 +9,10 @@ import {
   TextInput,
   StyleSheet,
 } from 'react-native';
+import {newNote, removeNote, updateNote} from '../store/redux/notes';
 
 function NewNote({route}) {
+  const dispatch = useDispatch();
   console.log(route.params.id);
 
   const [id, setId] = useState(route.params.id);
@@ -16,7 +20,13 @@ function NewNote({route}) {
   const [content, setContent] = useState(route.params.content);
 
   save = (id, title, content) => {
-    route.params.updateNote(id, title, content);
+    dispatch(
+      updateNote({
+        id: id,
+        title: title,
+        content: content,
+      }),
+    );
   };
 
   setTitle = newText => {

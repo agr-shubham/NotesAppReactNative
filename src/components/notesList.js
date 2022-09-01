@@ -1,4 +1,5 @@
 import React, {Component, useState} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import {
   Text,
   View,
@@ -7,31 +8,16 @@ import {
   StyleSheet,
   Pressable,
 } from 'react-native';
+import {newNote, removeNote, updateNote} from '../store/redux/notes';
 
 function NotesList({navigation}) {
-  const [notes, setNotes] = useState([]);
+  const notes = useSelector(state => state.notesList.notesList);
+  const dispatch = useDispatch();
+
   const [editNoteId, setEditNoteId] = useState(0);
   const [autoid, setAutoid] = useState(3);
 
   console.log('list of notes:' + notes);
-
-  function updateNote(id, title, content) {
-    var index = notes.findIndex(item => item.id == id);
-
-    console.log('index' + id);
-    console.log('notesList:' + notes);
-    setNotes(notes => {
-      return [
-        ...notes.slice(0, index),
-        {
-          id: id,
-          title: title,
-          content: content,
-        },
-        ...notes.slice(index + 1),
-      ];
-    });
-  }
 
   function setPageEditNote(index) {
     setEditNoteId(index);
@@ -42,21 +28,20 @@ function NotesList({navigation}) {
       id: editNoteId,
       title: notes.find(item => item.id == index).title,
       content: notes.find(item => item.id == index).content,
-      updateNote: updateNote,
     });
   }
 
   function setNewNote() {
+    console.log('setnewnote');
     var newid = autoid;
     setEditNoteId(newid);
     setAutoid(autoid + 1);
-    setNotes(notes => [...notes, {id: newid, title: '', content: ''}]);
+    dispatch(newNote({id: newid}));
     console.log('newid' + newid);
     navigation.navigate('EditNote', {
       id: newid,
       title: '',
       content: '',
-      updateNote: updateNote,
     });
   }
 
@@ -108,12 +93,7 @@ function NotesList({navigation}) {
             <Text style={styles.title}>Notes</Text>
           </View>
           <View style={styles.buttonContainer}>
-            <Pressable
-              style={styles.button}
-              onPress={() => {
-                setNewNote;
-              }}
-              title="New">
+            <Pressable style={styles.button} onPress={setNewNote} title="New">
               <Text style={styles.buttonText}>New</Text>
             </Pressable>
           </View>

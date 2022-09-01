@@ -5,6 +5,8 @@ import NotesList from './notesList';
 import {notesListPage, newNotePage} from '../util/constants';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {Provider} from 'react-redux';
+import {store} from '../store/redux/store';
 
 const Stack = createNativeStackNavigator();
 
@@ -12,12 +14,14 @@ function Home() {
   return (
     <>
       {/* <StatusBar style="dark" /> */}
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="NotesList" component={NotesList} />
-          <Stack.Screen name="EditNote" component={NewNote} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <Provider store={store}>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name="NotesList" component={NotesList} />
+            <Stack.Screen name="EditNote" component={NewNote} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Provider>
       {/* {this.state.page === notesListPage && (
           <>
             <NotesList
