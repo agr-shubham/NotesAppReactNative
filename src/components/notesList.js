@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {Component, useLayoutEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {
   Text,
@@ -18,6 +18,46 @@ function NotesList({navigation}) {
   const [autoid, setAutoid] = useState(3);
 
   console.log('list of notes:' + notes);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return (
+          <View style={styles.buttonsRightContainer}>
+            <View style={styles.buttonContainer}>
+              <Pressable
+                style={styles.button}
+                onPress={() => {
+                  alert('Search');
+                }}
+                title="Search">
+                <Text style={styles.buttonText}>Search</Text>
+              </Pressable>
+            </View>
+            <View style={styles.buttonContainer}>
+              <Pressable style={styles.button} onPress={setNewNote} title="New">
+                <Text style={styles.buttonText}>New</Text>
+              </Pressable>
+            </View>
+          </View>
+        );
+      },
+      headerLeft: () => {
+        return (
+          <View style={styles.buttonContainer}>
+            <Pressable
+              style={styles.button}
+              onPress={() => {
+                alert('Nav Button');
+              }}>
+              <Text style={styles.buttonText}>Nav</Text>
+            </Pressable>
+          </View>
+        );
+      },
+      title: 'Notes',
+    });
+  });
 
   function setPageEditNote(index) {
     setEditNoteId(index);
@@ -49,28 +89,7 @@ function NotesList({navigation}) {
     console.log(':size 0');
     return (
       <View>
-        <View style={styles.headerContainer}>
-          <View style={styles.buttonContainer}>
-            <Pressable
-              style={styles.button}
-              onPress={() => {
-                alert('Nav Button');
-              }}>
-              <Text style={styles.buttonText}>Nav</Text>
-            </Pressable>
-          </View>
-          <View style={styles.titleContainer}>
-            <Text style={styles.title}>Notes</Text>
-          </View>
-          <View style={styles.buttonContainer}>
-            <Pressable style={styles.button} onPress={setNewNote} title="New">
-              <Text style={styles.buttonText}>New</Text>
-            </Pressable>
-          </View>
-        </View>
-        <View>
-          <Text style={{textAlign: 'center'}}>No Notes</Text>
-        </View>
+        <Text style={{textAlign: 'center'}}>No Notes</Text>
       </View>
     );
   } else {
@@ -79,25 +98,6 @@ function NotesList({navigation}) {
     }
     return (
       <View>
-        <View style={styles.headerContainer}>
-          <View style={styles.buttonContainer}>
-            <Pressable
-              style={styles.button}
-              onPress={() => {
-                alert('Nav Button');
-              }}>
-              <Text style={styles.buttonText}>Nav</Text>
-            </Pressable>
-          </View>
-          <View style={styles.titleContainer}>
-            <Text style={styles.title}>Notes</Text>
-          </View>
-          <View style={styles.buttonContainer}>
-            <Pressable style={styles.button} onPress={setNewNote} title="New">
-              <Text style={styles.buttonText}>New</Text>
-            </Pressable>
-          </View>
-        </View>
         <FlatList
           data={notes}
           keyExtractor={item => item.id}
@@ -114,7 +114,6 @@ function NotesList({navigation}) {
             </View>
           )}
         />
-        <Text>Hi</Text>
       </View>
     );
   }
@@ -134,43 +133,33 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 25,
     fontWeight: 'bold',
+    color: 'black',
   },
   content: {
     fontSize: 19,
   },
   button: {
     height: '100%',
-    backgroundColor: 'blue',
     alignItems: 'center',
     justifyContent: 'center',
   },
   buttonText: {
-    color: 'white',
     fontSize: 20,
+    color: 'white',
+  },
+  buttonsRightContainer: {
+    flexDirection: 'row',
   },
   buttonContainer: {
-    width: 80,
-    height: '100%',
-    borderWidth: 2,
-    borderColor: 'black',
     color: 'black',
-    justifyContent: 'center',
+    flexDirection: 'row',
+    marginStart: 10,
   },
   headerContainer: {
     height: 70,
     flexDirection: 'row',
     borderWidth: 2,
     borderColor: 'black',
-  },
-  titleContainer: {
-    justifyContent: 'center',
-    backgroundColor: 'blue',
-    flex: 1,
-  },
-  title: {
-    color: 'white',
-    paddingStart: 10,
-    fontSize: 30,
   },
 });
 

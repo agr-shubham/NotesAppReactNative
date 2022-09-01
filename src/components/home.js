@@ -1,6 +1,6 @@
 import React, {Component, useState} from 'react';
 import {Text, View, FlatList, Button, StatusBar} from 'react-native';
-import NewNote from './newNote';
+import EditNote from './editNote';
 import NotesList from './notesList';
 import {notesListPage, newNotePage} from '../util/constants';
 import {NavigationContainer} from '@react-navigation/native';
@@ -13,32 +13,19 @@ const Stack = createNativeStackNavigator();
 function Home() {
   return (
     <>
-      {/* <StatusBar style="dark" /> */}
       <Provider store={store}>
         <NavigationContainer>
-          <Stack.Navigator>
+          <Stack.Navigator
+            screenOptions={{
+              headerStyle: {backgroundColor: '#6200EE'},
+              headerTintColor: 'white',
+              headerTitleAlign: 'center',
+            }}>
             <Stack.Screen name="NotesList" component={NotesList} />
-            <Stack.Screen name="EditNote" component={NewNote} />
+            <Stack.Screen name="EditNote" component={EditNote} />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>
-      {/* {this.state.page === notesListPage && (
-          <>
-            <NotesList
-              notes={this.state.notes}
-              setPageEditNote={this.setPageEditNote}
-            />
-          </>
-        )}
-        {this.state.page === newNotePage && (
-          <>
-            <NewNote
-              notes={this.state.notes}
-              id={this.editNoteId}
-              updateNote={this.updateNote}
-            />
-          </>
-        )} */}
     </>
   );
 }

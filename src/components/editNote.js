@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useLayoutEffect} from 'react';
 
 import {useSelector, useDispatch} from 'react-redux';
 import {
@@ -8,16 +8,37 @@ import {
   Button,
   TextInput,
   StyleSheet,
+  Pressable,
 } from 'react-native';
 import {newNote, removeNote, updateNote} from '../store/redux/notes';
 
-function NewNote({route}) {
+function EditNote({route, navigation}) {
   const dispatch = useDispatch();
   console.log(route.params.id);
 
   const [id, setId] = useState(route.params.id);
   const [title, setTitleState] = useState(route.params.title);
   const [content, setContent] = useState(route.params.content);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return (
+          <View style={styles.buttonContainer}>
+            <Pressable
+              style={styles.button}
+              onPress={() => {
+                alert('Delete');
+              }}
+              title="Delete">
+              <Text style={styles.buttonText}>Delete</Text>
+            </Pressable>
+          </View>
+        );
+      },
+      title: 'Notes',
+    });
+  });
 
   save = (id, title, content) => {
     dispatch(
@@ -79,6 +100,18 @@ const styles = StyleSheet.create({
   contentText: {
     fontSize: 19,
   },
+  button: {
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonText: {
+    fontSize: 20,
+    color: 'white',
+  },
+  buttonContainer: {
+    color: 'black',
+  },
 });
 
-export default NewNote;
+export default EditNote;
