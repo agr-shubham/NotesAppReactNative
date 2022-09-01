@@ -1,60 +1,41 @@
 import React, {Component, useState} from 'react';
-import {Text, View, FlatList, Button} from 'react-native';
-import Header from './header';
+import {Text, View, FlatList, Button, StatusBar} from 'react-native';
 import NewNote from './newNote';
 import NotesList from './notesList';
 import {notesListPage, newNotePage} from '../util/constants';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-function Home(props) {
-  const [notes, setNotes] = useState([]);
-  const [page, setPageState] = useState(notesListPage);
-  const [editNoteId, setEditNoteId] = useState(0);
-  const [autoid, setAutoid] = useState(3);
+const Stack = createNativeStackNavigator();
 
-  updateNote = (id, title, content) => {
-    index = notes.findIndex(item => item.id == id);
-    setNotes(notes => {
-      return [
-        ...notes.slice(0, index),
-        {
-          id: id,
-          title: title,
-          content: content,
-        },
-        ...notes.slice(index + 1),
-      ];
-    });
-  };
-
-  setPage = newText => {
-    if (newText === newNotePage) {
-      newid = autoid;
-      setAutoid(autoid + 1);
-      setNotes(notes => [...notes, {id: newid, title: '', content: ''}]);
-      setPageEditNote(newid);
-    } else {
-      setPageState(notesListPage);
-    }
-  };
-  setPageEditNote = index => {
-    setEditNoteId(index);
-    setPageState(newNotePage);
-  };
-
+function Home() {
   return (
-    <View>
-      <Header setPage={setPage} page={page} />
-      {page === notesListPage && (
-        <>
-          <NotesList notes={notes} setPageEditNote={setPageEditNote} />
-        </>
-      )}
-      {page === newNotePage && (
-        <>
-          <NewNote notes={notes} id={editNoteId} updateNote={updateNote} />
-        </>
-      )}
-    </View>
+    <>
+      {/* <StatusBar style="dark" /> */}
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="NotesList" component={NotesList} />
+          <Stack.Screen name="EditNote" component={NewNote} />
+        </Stack.Navigator>
+      </NavigationContainer>
+      {/* {this.state.page === notesListPage && (
+          <>
+            <NotesList
+              notes={this.state.notes}
+              setPageEditNote={this.setPageEditNote}
+            />
+          </>
+        )}
+        {this.state.page === newNotePage && (
+          <>
+            <NewNote
+              notes={this.state.notes}
+              id={this.editNoteId}
+              updateNote={this.updateNote}
+            />
+          </>
+        )} */}
+    </>
   );
 }
 

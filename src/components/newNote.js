@@ -8,20 +8,15 @@ import {
   StyleSheet,
 } from 'react-native';
 
-function NewNote(props) {
-  console.log(props.notes);
-  console.log(props.id);
+function NewNote({route}) {
+  console.log(route.params.id);
 
-  const [id, setId] = useState(props.id);
-  const [title, setTitleState] = useState(
-    props.notes.find(item => item.id == props.id).title,
-  );
-  const [content, setContent] = useState(
-    props.notes.find(item => item.id == props.id).content,
-  );
+  const [id, setId] = useState(route.params.id);
+  const [title, setTitleState] = useState(route.params.title);
+  const [content, setContent] = useState(route.params.content);
 
   save = (id, title, content) => {
-    props.updateNote(id, title, content);
+    route.params.updateNote(id, title, content);
   };
 
   setTitle = newText => {
