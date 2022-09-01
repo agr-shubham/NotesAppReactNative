@@ -9,6 +9,7 @@ import {
   TextInput,
   StyleSheet,
   Pressable,
+  Alert,
 } from 'react-native';
 import {newNote, removeNote, updateNote} from '../store/redux/notes';
 
@@ -27,9 +28,7 @@ function EditNote({route, navigation}) {
           <View style={styles.buttonContainer}>
             <Pressable
               style={styles.button}
-              onPress={() => {
-                alert('Delete');
-              }}
+              onPress={deleteNote}
               title="Delete">
               <Text style={styles.buttonText}>Delete</Text>
             </Pressable>
@@ -39,6 +38,23 @@ function EditNote({route, navigation}) {
       title: 'Notes',
     });
   });
+
+  function deleteNote() {
+    Alert.alert('Delete', 'Are you sure you want to delete?', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {
+        text: 'OK',
+        onPress: () => {
+          dispatch(removeNote({id: id}));
+          navigation.goBack();
+        },
+      },
+    ]);
+  }
 
   save = (id, title, content) => {
     dispatch(
