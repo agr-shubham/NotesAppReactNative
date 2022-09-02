@@ -9,7 +9,6 @@ import {
   Pressable,
 } from 'react-native';
 import {newNote, removeNote, updateNote} from '../store/redux/notes';
-import OptionsMenu from './optionsMenu';
 
 function NotesList({navigation}) {
   const notes = useSelector(state => state.notesList.notesList);
