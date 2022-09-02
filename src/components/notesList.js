@@ -9,6 +9,7 @@ import {
   Pressable,
 } from 'react-native';
 import {newNote, removeNote, updateNote} from '../store/redux/notes';
+import OptionsMenu from './optionsMenu';
 
 function NotesList({navigation}) {
   const notes = useSelector(state => state.notesList.notesList);
@@ -93,24 +94,28 @@ function NotesList({navigation}) {
       </View>
     );
   } else {
-    {
-      console.log('hi');
-    }
     return (
       <View>
         <FlatList
           data={notes}
           keyExtractor={item => item.id}
           renderItem={({item}) => (
-            <View style={styles.noteCard}>
-              <Pressable onPress={setPageEditNote.bind(this, item.id)}>
-                <Text style={styles.title} numberOfLines={1}>
-                  {item.title === '' ? 'Untitled' : item.title}
-                </Text>
-                <Text style={styles.content} numberOfLines={1}>
-                  {item.content === '' ? 'Blank' : item.content}
-                </Text>
-              </Pressable>
+            <View style={styles.noteCardContainer}>
+              <View style={styles.noteCard}>
+                <Pressable onPress={setPageEditNote.bind(this, item.id)}>
+                  <Text style={styles.title} numberOfLines={1}>
+                    {item.title === '' ? 'Untitled' : item.title}
+                  </Text>
+                  <Text style={styles.content} numberOfLines={1}>
+                    {item.content === '' ? 'Blank' : item.content}
+                  </Text>
+                  <Text style={styles.lastModified} numberOfLines={1}>
+                    Last Modified:{' '}
+                    {new Date(JSON.parse(item.updateTime)).toLocaleDateString()}{' '}
+                    {new Date(JSON.parse(item.updateTime)).toLocaleTimeString()}
+                  </Text>
+                </Pressable>
+              </View>
             </View>
           )}
         />
@@ -121,8 +126,12 @@ function NotesList({navigation}) {
 
 const styles = StyleSheet.create({
   noteCard: {
+    width: '100%',
     padding: 5,
-    borderBottomWidth: 2,
+    borderWidth: 1,
+  },
+  noteCardContainer: {
+    flexDirection: 'row',
   },
   noteContentContainer: {
     justifyContent: 'center',
@@ -137,6 +146,9 @@ const styles = StyleSheet.create({
   },
   content: {
     fontSize: 19,
+  },
+  lastModified: {
+    fontSize: 15,
   },
   button: {
     height: '100%',
@@ -160,6 +172,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderWidth: 2,
     borderColor: 'black',
+  },
+  optionsContainer: {
+    borderBottomWidth: 1,
   },
 });
 
