@@ -4,6 +4,7 @@ const notesSlice = createSlice({
   name: 'notes',
   initialState: {
     notesList: [],
+    autoIncrementId: 3,
   },
   reducers: {
     newNote: (state, action) => {
@@ -26,9 +27,13 @@ const notesSlice = createSlice({
         state.notesList[idx].updateTime = JSON.stringify(new Date());
       }
     },
+    incrementId: state => {
+      state.autoIncrementId = state.autoIncrementId + 1;
+    },
   },
 });
 
+export const incrementId = notesSlice.actions.incrementId;
 export const newNote = notesSlice.actions.newNote;
 export const removeNote = notesSlice.actions.removeNote;
 export const updateNote = notesSlice.actions.updateNote;

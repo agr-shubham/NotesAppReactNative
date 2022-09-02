@@ -7,15 +7,18 @@ import {
   Button,
   StyleSheet,
   Pressable,
+  TextInput,
 } from 'react-native';
-import {newNote, removeNote, updateNote} from '../store/redux/notes';
+import {newNote, incrementId, updateNote} from '../store/redux/notes';
 
 function NotesList({navigation}) {
   const notes = useSelector(state => state.notesList.notesList);
+  const autoincId = useSelector(state => state.notesList.autoIncrementId);
   const dispatch = useDispatch();
-
+  const [searchVisibility, setSearchVisibilty] = useState(false);
   const [editNoteId, setEditNoteId] = useState(0);
-  const [autoid, setAutoid] = useState(3);
+  const [searchText, setSearchText] = useState('');
+  const [filteredNotes, setFilteredNotes] = useState([]);
 
   console.log('list of notes:' + notes);
 
@@ -27,9 +30,7 @@ function NotesList({navigation}) {
             <View style={styles.buttonContainer}>
               <Pressable
                 style={styles.button}
-                onPress={() => {
-                  alert('Search');
-                }}
+                onPress={toggleSearchVisibility}
                 title="Search">
                 <Text style={styles.buttonText}>Search</Text>
               </Pressable>
@@ -59,6 +60,13 @@ function NotesList({navigation}) {
     });
   });
 
+  function toggleSearchVisibility() {
+    if (searchVisibility) {
+      setSearchText('');
+    }
+    setSearchVisibilty(!searchVisibility);
+  }
+
   function setPageEditNote(index) {
     setEditNoteId(index);
     //navigate to editNote
@@ -73,9 +81,9 @@ function NotesList({navigation}) {
 
   function setNewNote() {
     console.log('setnewnote');
-    var newid = autoid;
+    var newid = autoincId;
+    dispatch(incrementId());
     setEditNoteId(newid);
-    setAutoid(autoid + 1);
     dispatch(newNote({id: newid}));
     console.log('newid' + newid);
     navigation.navigate('EditNote', {
@@ -85,18 +93,49 @@ function NotesList({navigation}) {
     });
   }
 
-  if (notes.length == 0) {
+  const searchOnChange = newText => {
+    setSearchText(newText);
+    console.log('newtext=' + newText);
+    const filteredNotesTemp = notes.filter(
+      note => note.title.includes(newText) || note.content.includes(newText),
+    );
+    setFilteredNotes(filteredNotesTemp);
+    console.log('notes' + notes);
+    console.log('filterednotes' + filteredNotesTemp);
+  };
+
+  if (
+    notes.length == 0 ||
+    (searchText.length != 0 && filteredNotes.length == 0)
+  ) {
     console.log(':size 0');
     return (
       <View>
+        {searchVisibility && (
+          <TextInput
+            style={styles.searchText}
+            value={searchText}
+            placeholder="Search"
+            onChangeText={newText => searchOnChange(newText)}
+          />
+        )}
         <Text style={{textAlign: 'center'}}>No Notes</Text>
       </View>
     );
   } else {
+    console.log('length' + searchText.length);
     return (
       <View>
+        {searchVisibility && (
+          <TextInput
+            style={styles.searchText}
+            value={searchText}
+            placeholder="Search"
+            onChangeText={newText => searchOnChange(newText)}
+          />
+        )}
         <FlatList
-          data={notes}
+          data={searchText.length == 0 ? notes : filteredNotes}
           keyExtractor={item => item.id}
           renderItem={({item}) => (
             <View style={styles.noteCardContainer}>
