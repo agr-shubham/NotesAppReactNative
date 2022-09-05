@@ -16,7 +16,6 @@ function NotesList({navigation}) {
   const autoincId = useSelector(state => state.notesList.autoIncrementId);
   const dispatch = useDispatch();
   const [searchVisibility, setSearchVisibilty] = useState(false);
-  const [editNoteId, setEditNoteId] = useState(0);
   const [searchText, setSearchText] = useState('');
   const [filteredNotes, setFilteredNotes] = useState([]);
 
@@ -54,15 +53,13 @@ function NotesList({navigation}) {
     setSearchVisibilty(!searchVisibility);
   }
 
-  function setPageEditNote(index) {
-    setEditNoteId(index);
+  function setPageEditNote(itemid) {
     //navigate to editNote
-    console.log('editnoteid2 ' + index);
     console.log(notes);
     navigation.navigate('EditNote', {
-      id: editNoteId,
-      title: notes.find(item => item.id == index).title,
-      content: notes.find(item => item.id == index).content,
+      id: itemid,
+      title: notes.find(item => item.id == itemid).title,
+      content: notes.find(item => item.id == itemid).content,
     });
   }
 
@@ -70,7 +67,6 @@ function NotesList({navigation}) {
     console.log('setnewnote');
     var newid = autoincId;
     dispatch(incrementId());
-    setEditNoteId(newid);
     dispatch(newNote({id: newid}));
     console.log('newid' + newid);
     navigation.navigate('EditNote', {
@@ -122,7 +118,23 @@ function NotesList({navigation}) {
           />
         )}
         <FlatList
-          data={searchText.length == 0 ? notes : filteredNotes}
+          data={
+            searchText.length == 0
+              ? notes
+                  .slice()
+                  .sort((a, b) =>
+                    b.updateTime
+                      .toString()
+                      .localeCompare(a.updateTime.toString()),
+                  )
+              : filteredNotes
+                  .slice()
+                  .sort((a, b) =>
+                    b.updateTime
+                      .toString()
+                      .localeCompare(a.updateTime.toString()),
+                  )
+          }
           keyExtractor={item => item.id}
           renderItem={({item}) => (
             <View style={styles.noteCardContainer}>
