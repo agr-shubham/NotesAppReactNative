@@ -12,8 +12,8 @@ import {
 import {newNote, incrementId, updateNote} from '../store/redux/notes';
 
 function NotesList({navigation}) {
-  const notes = useSelector(state => state.notesList.notesList);
-  const autoincId = useSelector(state => state.notesList.autoIncrementId);
+  const notes = useSelector(state => state.notesList);
+  const autoincId = useSelector(state => state.autoIncrementId);
   const dispatch = useDispatch();
   const [searchVisibility, setSearchVisibilty] = useState(false);
   const [searchText, setSearchText] = useState('');
