@@ -43,19 +43,6 @@ function NotesList({navigation}) {
           </View>
         );
       },
-      headerLeft: () => {
-        return (
-          <View style={styles.buttonContainer}>
-            <Pressable
-              style={styles.button}
-              onPress={() => {
-                alert('Nav Button');
-              }}>
-              <Text style={styles.buttonText}>Nav</Text>
-            </Pressable>
-          </View>
-        );
-      },
       title: 'Notes',
     });
   });
