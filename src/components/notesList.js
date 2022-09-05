@@ -8,8 +8,16 @@ import {
   StyleSheet,
   Pressable,
   TextInput,
+  Alert,
 } from 'react-native';
-import {newNote, incrementId, updateNote} from '../store/redux/notes';
+import {
+  newNote,
+  incrementId,
+  updateNote,
+  removeNote,
+} from '../store/redux/notes';
+import OptionsMenu from 'react-native-option-menu';
+const MoreIcon = require('../png/more.png');
 
 function NotesList({navigation}) {
   const notes = useSelector(state => state.notesList);
@@ -74,6 +82,22 @@ function NotesList({navigation}) {
       title: '',
       content: '',
     });
+  }
+
+  function deleteNote(id) {
+    Alert.alert('Delete', 'Are you sure you want to delete?', [
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {
+        text: 'OK',
+        onPress: () => {
+          dispatch(removeNote({id: id}));
+        },
+      },
+    ]);
   }
 
   const searchOnChange = newText => {
@@ -153,6 +177,21 @@ function NotesList({navigation}) {
                   </Text>
                 </Pressable>
               </View>
+              <View style={styles.optionsMenuButtonContainer}>
+                <OptionsMenu
+                  button={MoreIcon}
+                  buttonStyle={{
+                    width: 30,
+                    height: 20,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    resizeMode: 'contain',
+                  }}
+                  destructiveIndex={1}
+                  options={['Delete', 'Share']}
+                  actions={[deleteNote.bind(this, item.id)]}
+                />
+              </View>
             </View>
           )}
         />
@@ -163,7 +202,7 @@ function NotesList({navigation}) {
 
 const styles = StyleSheet.create({
   noteCard: {
-    width: '100%',
+    width: '90%',
     padding: 5,
     borderWidth: 1,
   },
@@ -212,6 +251,13 @@ const styles = StyleSheet.create({
   },
   optionsContainer: {
     borderBottomWidth: 1,
+  },
+  optionsMenuButtonContainer: {
+    alignContent: 'center',
+    justifyContent: 'center',
+    borderStartWidth: 1,
+    borderBottomWidth: 1,
+    borderTopWidth: 1,
   },
 });
 
