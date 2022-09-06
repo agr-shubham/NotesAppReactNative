@@ -84,6 +84,17 @@ function NotesList({navigation}) {
     });
   }
 
+  function shareNote(item) {
+    console.log('Share');
+    var SendIntentAndroid = require('react-native-send-intent');
+    console.log('Share');
+    SendIntentAndroid.sendText({
+      title: item.title,
+      text: item.title + '\n' + item.content,
+      type: SendIntentAndroid.TEXT_PLAIN,
+    });
+  }
+
   function deleteNote(id) {
     Alert.alert('Delete', 'Are you sure you want to delete?', [
       {
@@ -187,9 +198,11 @@ function NotesList({navigation}) {
                     justifyContent: 'center',
                     resizeMode: 'contain',
                   }}
-                  destructiveIndex={1}
-                  options={['Delete', 'Share']}
-                  actions={[deleteNote.bind(this, item.id)]}
+                  options={['Delete', 'Share', 'Cancel']}
+                  actions={[
+                    deleteNote.bind(this, item.id),
+                    shareNote.bind(this, item),
+                  ]}
                 />
               </View>
             </View>
