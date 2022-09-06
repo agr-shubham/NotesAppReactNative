@@ -17,6 +17,7 @@ import {
   removeNote,
 } from '../store/redux/notes';
 import OptionsMenu from 'react-native-option-menu';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 const MoreIcon = require('../png/more.png');
 
 function NotesList({navigation}) {
@@ -39,12 +40,12 @@ function NotesList({navigation}) {
                 style={styles.button}
                 onPress={toggleSearchVisibility}
                 title="Search">
-                <Text style={styles.buttonText}>Search</Text>
+                <Ionicons name="search-outline" color="white" size={30} />
               </Pressable>
             </View>
             <View style={styles.buttonContainer}>
               <Pressable style={styles.button} onPress={setNewNote} title="New">
-                <Text style={styles.buttonText}>New</Text>
+                <Ionicons name="add-outline" color="white" size={40} />
               </Pressable>
             </View>
           </View>
@@ -255,6 +256,7 @@ const styles = StyleSheet.create({
     color: 'black',
     flexDirection: 'row',
     marginStart: 10,
+    marginEnd: 10,
   },
   headerContainer: {
     height: 70,

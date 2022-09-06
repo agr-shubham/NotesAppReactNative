@@ -11,6 +11,7 @@ import {
   Pressable,
   Alert,
 } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {newNote, removeNote, updateNote} from '../store/redux/notes';
 
 function EditNote({route, navigation}) {
@@ -30,7 +31,7 @@ function EditNote({route, navigation}) {
               style={styles.button}
               onPress={deleteNote}
               title="Delete">
-              <Text style={styles.buttonText}>Delete</Text>
+              <Ionicons name="trash-outline" color="white" size={30} />
             </Pressable>
           </View>
         );
