@@ -1,10 +1,8 @@
 import 'react-native-gesture-handler';
 
-import React, {Component, useState} from 'react';
-import {Text, View, FlatList, Button, StatusBar} from 'react-native';
+import React from 'react';
 import EditNote from './editNote';
 import NotesList from './notesList';
-import {notesListPage, newNotePage} from '../util/constants';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Provider} from 'react-redux';

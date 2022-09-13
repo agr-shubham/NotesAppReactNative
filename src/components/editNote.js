@@ -1,24 +1,15 @@
 import React, {useState, useLayoutEffect} from 'react';
 
-import {useSelector, useDispatch} from 'react-redux';
-import {
-  Text,
-  View,
-  FlatList,
-  Button,
-  TextInput,
-  StyleSheet,
-  Pressable,
-  Alert,
-} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {View, TextInput, StyleSheet, Pressable, Alert} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {newNote, removeNote, updateNote} from '../store/redux/notes';
+import {removeNote, updateNote} from '../store/redux/notes';
 
 function EditNote({route, navigation}) {
   const dispatch = useDispatch();
   console.log(route.params.id);
 
-  const [id, setId] = useState(route.params.id);
+  const [id] = useState(route.params.id);
   const [title, setTitleState] = useState(route.params.title);
   const [content, setContent] = useState(route.params.content);
 
@@ -57,25 +48,25 @@ function EditNote({route, navigation}) {
     ]);
   }
 
-  save = (id, title, content) => {
+  function save(_id, _title, _content) {
     dispatch(
       updateNote({
-        id: id,
-        title: title,
-        content: content,
+        id: _id,
+        title: _title,
+        content: _content,
       }),
     );
-  };
+  }
 
-  setTitle = newText => {
+  function setTitle(newText) {
     setTitleState(newText);
     save(id, newText, content);
-  };
+  }
 
-  setNote = newText => {
+  function setNote(newText) {
     setContent(newText);
     save(id, title, newText);
-  };
+  }
 
   return (
     <View style={styles.newNoteContainer}>

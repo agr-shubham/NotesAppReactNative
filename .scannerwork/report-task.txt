@@ -1,0 +1,6 @@
+projectKey=NotesApp
+serverUrl=http://localhost:9000
+serverVersion=9.2.0.49834
+dashboardUrl=http://localhost:9000/dashboard?id=NotesApp
+ceTaskId=AYM2CjSJyB6WoHjGrsyU
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AYM2CjSJyB6WoHjGrsyU

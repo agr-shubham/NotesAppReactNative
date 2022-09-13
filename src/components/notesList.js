@@ -1,21 +1,15 @@
-import React, {Component, useLayoutEffect, useState} from 'react';
+import React, {useLayoutEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {
   Text,
   View,
   FlatList,
-  Button,
   StyleSheet,
   Pressable,
   TextInput,
   Alert,
 } from 'react-native';
-import {
-  newNote,
-  incrementId,
-  updateNote,
-  removeNote,
-} from '../store/redux/notes';
+import {newNote, incrementId, removeNote} from '../store/redux/notes';
 import OptionsMenu from 'react-native-option-menu';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 const MoreIcon = require('../png/more.png');

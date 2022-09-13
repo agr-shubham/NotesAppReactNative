@@ -1,5 +1,4 @@
 import {configureStore} from '@reduxjs/toolkit';
-import notes from './notes';
 import notesReducer from './notes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {persistStore, persistReducer} from 'redux-persist';
